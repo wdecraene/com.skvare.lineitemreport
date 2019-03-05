@@ -78,8 +78,13 @@ class CRM_Lineitemreport_Report_Form_LineItem extends CRM_Report_Form {
    */
   public $_drilldownReport = array('event/income' => 'Link to Detail Report');
 
-  
-  
+  /**
+   * Make sure correct group fields are added so this query is
+   * also compatible with mysql 5.7
+   *
+   * @var        array
+   */
+  protected $_extraGroupFields = array();
 
   /**
    * Searches database for priceset values.
@@ -420,6 +425,7 @@ ORDER BY  cv.label
           ) {
             $alias = "{$tableName}_{$fieldName}";
             $select[] = "{$field['dbAlias']} as $alias";
+            $this->_extraGroupFields[] = $alias;
             $this->_columnHeaders["{$tableName}_{$fieldName}"]['type'] = CRM_Utils_Array::value('type', $field);
             $this->_columnHeaders["{$tableName}_{$fieldName}"]['no_display'] = CRM_Utils_Array::value('no_display', $field);
             $this->_columnHeaders["{$tableName}_{$fieldName}"]['title'] = CRM_Utils_Array::value('title', $field);
@@ -676,6 +682,10 @@ ORDER BY  cv.label
    */
   public function groupBy() {
     $this->_groupBy = "GROUP BY {$this->_aliases['civicrm_'.$this->_entity]}.id";
+
+    foreach ($this->_extraGroupFields as $extraGroupField) {
+      $this->_groupBy .= ', ' . $extraGroupField;
+    }
   }
 
   /**
