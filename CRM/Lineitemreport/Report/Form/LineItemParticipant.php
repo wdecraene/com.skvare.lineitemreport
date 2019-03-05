@@ -214,6 +214,7 @@ class CRM_Lineitemreport_Report_Form_LineItemParticipant extends CRM_Lineitemrep
             'title' => ts('Participant Status'),
             'operatorType' => CRM_Report_Form::OP_MULTISELECT,
             'options' => CRM_Event_PseudoConstant::participantStatus(NULL, NULL, 'label'),
+            'type' => CRM_Utils_Type::T_INT,
           ),
           'rid' => array(
             'name' => 'role_id',
@@ -271,6 +272,7 @@ class CRM_Lineitemreport_Report_Form_LineItemParticipant extends CRM_Lineitemrep
             'title' => ts('Event Type'),
             'operatorType' => CRM_Report_Form::OP_MULTISELECT,
             'options' => CRM_Core_OptionGroup::values('event_type'),
+            'type' => CRM_Utils_Type::T_INT,
           ),
           'event_start_date' => array(
             'title' => ts('Event Start Date'),
@@ -351,6 +353,7 @@ class CRM_Lineitemreport_Report_Form_LineItemParticipant extends CRM_Lineitemrep
             'title' => ts('Fee Level'),
             'operatorType' => CRM_Report_Form::OP_MULTISELECT,
             'options' => $this->getPriceLevels(),
+            'type' => CRM_Utils_Type::T_INT,
           ),
         ),
       ),
